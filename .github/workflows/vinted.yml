@@ -1,1 +1,23 @@
+name: Vérifier le bot Vinted
 
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Compiler le bot
+        run: go build -o worker ./cmd/worker/main.go
+
+      - name: Vérifier Docker Compose
+        run: docker compose config
