@@ -13,7 +13,7 @@ jobs:
           go-version: '1.24.3'
           cache: true
       - name: Compiler le bot
-        run: go build -o worker ./cmd/worker/main.go
+        run: go build -o worker ./cmd/cmd/worker/main.go
       - name: Rechercher les annonces et envoyer sur Discord
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
