@@ -97,6 +97,11 @@ func (s *VintedScraper) Search(ctx context.Context, job models.ScrapeJob) ([]mod
 		return nil, err
 	}
 	var response VintedResponse
+	logger.Info("Réponse Vinted",
+    zap.Int("status", resp.StatusCode),
+    zap.String("content_type", resp.Header.Get("Content-Type")),
+    zap.String("debut_reponse", string(bodyText[:min(len(bodyText), 300)])),
+)
 	err = json.Unmarshal(bodyText, &response)
 	if err != nil {
 		logger.Error("Error unmarshalling response", zap.Error(err))
