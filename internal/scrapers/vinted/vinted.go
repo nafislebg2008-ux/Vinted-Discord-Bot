@@ -107,6 +107,9 @@ func (s *VintedScraper) Search(ctx context.Context, job models.ScrapeJob) ([]mod
     zap.String("content_type", resp.Header.Get("Content-Type")),
     zap.String("debut_reponse", string(bodyText[:min(len(bodyText), 300)])),
 )
+	if resp.StatusCode != http.StatusOK {
+    return nil, fmt.Errorf("Vinted a répondu avec le statut HTTP %d", resp.StatusCode)
+}
 	err = json.Unmarshal(bodyText, &response)
 	if err != nil {
 		logger.Error("Error unmarshalling response", zap.Error(err))
